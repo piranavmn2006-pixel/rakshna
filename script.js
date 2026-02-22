@@ -1003,4 +1003,30 @@ Forever yours... ❤️`;
         starsContainer.innerHTML = '';
         for (let i = 0; i < 150; i++) createStar();
     }
+
+    // --- LIGHTBOX LOGIC ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeLightbox = document.querySelector('.close-lightbox');
+    const galleryPhotos = document.querySelectorAll('.photo-frame img');
+
+    galleryPhotos.forEach(img => {
+        img.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent conflicts
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+        });
+    });
+
+    if (closeLightbox) {
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    }
+
+    if (lightbox) {
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    }
 });
