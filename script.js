@@ -153,22 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setInterval(createPetal, 1000);
 
-    // 4. Romantic Music Player
-    const musicBtn = document.getElementById('music-btn');
-    const musicIcon = document.getElementById('music-icon');
-    const audio = document.getElementById('romantic-audio');
-    let isPlaying = false;
-
-    musicBtn.addEventListener('click', () => {
-        if (isPlaying) {
-            audio.pause();
-            musicIcon.innerText = '🎵';
-        } else {
-            audio.play().catch(e => console.log("User interaction needed for audio"));
-            musicIcon.innerText = '⏸️';
-        }
-        isPlaying = !isPlaying;
-    });
 
     // 5. Countdown Timer Logic (Target: Feb 23, 2026, 1 PM)
     const countdownDate = new Date("Feb 23, 2026 13:00:00").getTime();
@@ -621,40 +605,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 19. Audio Visualizer (Real Web Audio API)
-    const visualizerCanvas = document.getElementById('audio-visualizer');
-    if (visualizerCanvas) {
-        const vCtx = visualizerCanvas.getContext('2d');
-        let audioCtx, analyser, dataArray, source;
-
-        audio.addEventListener('play', () => {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = audioCtx.createAnalyser();
-                source = audioCtx.createMediaElementSource(audio);
-                source.connect(analyser);
-                analyser.connect(audioCtx.destination);
-                analyser.fftSize = 256;
-                dataArray = new Uint8Array(analyser.frequencyBinCount);
-                drawVisualizer();
-            }
-        });
-
-        function drawVisualizer() {
-            requestAnimationFrame(drawVisualizer);
-            analyser.getByteFrequencyData(dataArray);
-            vCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
-
-            const barWidth = (visualizerCanvas.width / dataArray.length) * 2.5;
-            let x = 0;
-            for (let i = 0; i < dataArray.length; i++) {
-                const barHeight = dataArray[i] / 2;
-                vCtx.fillStyle = `rgba(255, 77, 109, ${barHeight / 100})`;
-                vCtx.fillRect(x, visualizerCanvas.height - barHeight, barWidth, barHeight);
-                x += barWidth + 1;
-            }
-        }
-    }
 
     // 13. Theme Switching Logic
     const themeBtns = document.querySelectorAll('.theme-btn');

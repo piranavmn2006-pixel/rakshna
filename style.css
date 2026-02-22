@@ -922,32 +922,6 @@ h3 {
     }
 }
 
-.music-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1001;
-    background: var(--glass-strong);
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 2px solid var(--glass-border);
-    padding: 1rem;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: var(--shadow-lg), 0 0 20px rgba(255, 77, 109, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 1.5rem;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.music-toggle:hover {
-    transform: scale(1.15) rotate(360deg);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-    background: var(--gradient-primary);
-}
 
 /* Love Card Reason */
 .reason-card {
