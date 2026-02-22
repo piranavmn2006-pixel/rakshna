@@ -254,59 +254,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 10. Gallery Lightbox (for both gallery and timeline)
+    // 10. Gallery Lightbox (Updated for Story Mode)
     const photoFrames = document.querySelectorAll('.photo-frame');
     const timelineImages = document.querySelectorAll('.timeline-img img');
-    let lightbox = document.getElementById('lightbox');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeLightbox = document.querySelector('.close-lightbox');
 
-    if (!lightbox) {
-        lightbox = document.createElement('div');
-        lightbox.id = 'lightbox';
-        lightbox.className = 'lightbox';
-        lightbox.innerHTML = `
-            <div class="lightbox-content">
-                <span class="lightbox-close">&times;</span>
-                <img src="" alt="Full Frame Image">
-            </div>
-        `;
-        document.body.appendChild(lightbox);
-    }
-
-    const lightboxImg = lightbox.querySelector('img');
-    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    const openFullImage = (src) => {
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+        // No need to hide body overflow as Story Mode already does it
+    };
 
     // Gallery photos
     photoFrames.forEach(frame => {
         frame.addEventListener('click', () => {
             const img = frame.querySelector('img');
-            lightboxImg.src = img.src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (img) openFullImage(img.src);
         });
     });
 
     // Timeline images
     timelineImages.forEach(img => {
-        img.style.cursor = 'zoom-in';
         img.addEventListener('click', (e) => {
             e.stopPropagation();
-            lightboxImg.src = img.src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openFullImage(img.src);
         });
     });
 
-    lightboxClose.addEventListener('click', () => {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
+    if (closeLightbox) {
+        closeLightbox.addEventListener('click', () => {
             lightbox.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
+        });
+    }
+
+    if (lightbox) {
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    }
 
     // Close lightbox on Escape key OR Return to Home if surprise is active
     document.addEventListener('keydown', (e) => {
@@ -1002,31 +990,5 @@ Forever yours... ❤️`;
     function createStars() {
         starsContainer.innerHTML = '';
         for (let i = 0; i < 150; i++) createStar();
-    }
-
-    // --- LIGHTBOX LOGIC ---
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeLightbox = document.querySelector('.close-lightbox');
-    const galleryPhotos = document.querySelectorAll('.photo-frame img');
-
-    galleryPhotos.forEach(img => {
-        img.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent conflicts
-            lightboxImg.src = img.src;
-            lightbox.classList.add('active');
-        });
-    });
-
-    if (closeLightbox) {
-        closeLightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
-    }
-
-    if (lightbox) {
-        lightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
     }
 });
