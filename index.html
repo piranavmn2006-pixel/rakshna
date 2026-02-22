@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakshna’s Birthday Surprise – A Dynamic Love Story</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar hidden" id="main-nav">
+        <ul class="nav-links">
+            <li><a data-target="welcome">Welcome</a></li>
+            <li><a data-target="letter">Letter</a></li>
+            <li><a data-target="timeline">Journey</a></li>
+            <li><a data-target="gallery">Gallery</a></li>
+            <li><a data-target="video-gallery">Videos</a></li>
+            <li><a data-target="countdown-section">Countdown</a></li>
+            <li><a data-target="reasons">100 Reasons</a></li>
+            <li><a data-target="wish">Wishes</a></li>
+            <li><a data-target="final-surprise">Surprise</a></li>
+        </ul>
+    </nav>
+    <div class="theme-sidebar" id="theme-sidebar">
+        <button class="theme-btn" data-theme="midnight" title="Midnight Magic">🌙</button>
+        <button class="theme-btn active" data-theme="rose" title="Rose Garden">🌹</button>
+        <button class="theme-btn" data-theme="sunset" title="Sunset Love">🌅</button>
+    </div>
+
+    <div id="heart-container"></div>
+    <div id="petal-container"></div>
+
+    <button class="music-toggle" id="music-btn" title="Toggle Romantic Music">
+        <span id="music-icon">🎵</span>
+    </button>
+    <audio id="romantic-audio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="heartbeat-audio" loop>
+        <source src="heartbeat-soundsmith-1(chosic.com).mp3" type="audio/mpeg">
+    </audio>
+    <canvas id="audio-visualizer"></canvas>
+
+    <main>
+        <!-- 1. Welcome Landing Page -->
+        <section id="welcome" class="hero section">
+            <!-- Background Video -->
+            <div class="video-bg">
+                <video autoplay muted loop playsinline id="bg-video">
+                    <source src="assets/WhatsApp Video 2026-02-14 at 5.13.04 PM.mp4" type="video/mp4">
+                </video>
+                <div class="overlay"></div>
+            </div>
+
+            <div class="glass-card text-center animate-up">
+                <h1 class="glow-text">Happy Birthday, <br><span class="accent-text">Beautiful Rakshna ❤️</span></h1>
+                <p class="fade-in">From the moment you came into my life, everything became brighter, happier, and more
+                    meaningful.</p>
+                <p class="fade-in delay-1">Today is not just your birthday…</p>
+                <p class="fade-in delay-2">It’s the day the world was blessed with you 💖</p>
+                <button id="enter-btn" class="btn primary-btn pulse-anim">👉 Click to Enter Your Surprise</button>
+            </div>
+        </section>
+
+        <!-- Hidden Sections initially -->
+        <div id="surprise-content" class="hidden">
+            <!-- 2. Love Message Section -->
+            <section id="letter" class="section">
+                <div class="glass-card">
+                    <h2 class="section-title shimmer-text">A Letter From My Heart</h2>
+                    <div class="letter-content">
+                        <p>Dear Rakshna,</p>
+                        <p>On this special day, I just want you to know how much you mean to me. You are my happiness,
+                            my comfort, my strength, and my biggest blessing.</p>
+                        <p>Your smile makes my worst days better. Your voice gives me peace. Your love gives me purpose.
+                        </p>
+                        <p>I am so grateful to celebrate another year of your beautiful life. And I promise to always
+                            stand beside you, support you, and love you endlessly. 💞</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2.5 Interactive Flower Garden -->
+            <section id="garden" class="section">
+                <div class="glass-card text-center">
+                    <h2 class="section-title shimmer-text">Our Secret Garden</h2>
+                    <p>Click the flowers to reveal a hidden thought... 🌸</p>
+                    <div class="flower-bed" id="flower-bed"></div>
+                    <div id="flower-message" class="highlight-box mt-2 hidden"></div>
+                </div>
+            </section>
+
+            <!-- 2.6. Interactive Constellation -->
+            <section id="constellation-section" class="section">
+                <div class="glass-card text-center">
+                    <h2 class="section-title shimmer-text">Written in the Stars</h2>
+                    <p>Connect the stars to see what's written in our destiny... ✨</p>
+                    <div class="constellation-canvas-wrapper">
+                        <canvas id="constellation-canvas" width="600" height="400"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2.7. Ink & Parchment Handwriting -->
+            <section id="parchment-section" class="section">
+                <div class="parchment-container">
+                    <div class="parchment" id="parchment">
+                        <div id="handwritten-text"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Memory Timeline -->
+            <section id="timeline" class="section">
+                <h2 class="section-title shimmer-text">Our Beautiful Journey</h2>
+                <div class="timeline-container">
+                    <div class="timeline-item reveal" data-direction="left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-img"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.09 PM (1).jpeg"
+                                    alt="Moment" loading="lazy"></div>
+                            <h3>💕 The Day We Met</h3>
+                            <p>“The day my life changed forever.”</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal" data-direction="right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-img"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.10 PM (1).jpeg"
+                                    alt="Moment" loading="lazy"></div>
+                            <h3>📱 Our First Long Talk</h3>
+                            <p>“Hours felt like minutes with you.”</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal" data-direction="left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-img"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.12 PM (1).jpeg"
+                                    alt="Moment" loading="lazy"></div>
+                            <h3>😊 The First Time You Smiled at Me</h3>
+                            <p>“That smile still lives in my heart.”</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal" data-direction="right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-img"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.14 PM (1).jpeg"
+                                    alt="Moment" loading="lazy"></div>
+                            <h3>🤍 Our Favorite Memory Together</h3>
+                            <p>"One of the best days of my life."</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal" data-direction="left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-img"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.15 PM (1).jpeg"
+                                    alt="Moment" loading="lazy"></div>
+                            <h3>💖 Special Moments</h3>
+                            <p>"Every moment with you is special."</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal" data-direction="right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-img"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.17 PM (1).jpeg"
+                                    alt="Moment" loading="lazy"></div>
+                            <h3>🌟 Beautiful Memories</h3>
+                            <p>"Creating beautiful memories together."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3.1. Love Map -->
+            <section id="map-section" class="section">
+                <h2 class="section-title shimmer-text">Our Love Map</h2>
+                <p class="text-center">Places where our hearts met... 📍</p>
+                <div class="map-container glass-card">
+                    <div class="map-frame" id="love-map">
+                        <!-- Map Pins -->
+                        <div class="map-pin" data-info="Where we first met! ❤️" style="top: 30%; left: 40%;">📍</div>
+                        <div class="map-pin" data-info="Our first date... ☕" style="top: 50%; left: 60%;">📍</div>
+                        <div class="map-pin" data-info="A special sunset. 🌅" style="top: 20%; left: 70%;">📍</div>
+                    </div>
+                    <div id="map-info" class="highlight-box hidden"></div>
+                </div>
+            </section>
+
+            <!-- 4. Photo Gallery -->
+            <section id="gallery" class="section">
+                <h2 class="section-title shimmer-text">Moments I Treasure Forever</h2>
+                <div class="gallery-grid">
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.09 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.09 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.09 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.10 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.10 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.10 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.11 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.11 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.11 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.12 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.12 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.12 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.13 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.13 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.13 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.14 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.14 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.14 PM (3).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.14 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.15 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.15 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.16 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.16 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.17 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.17 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.17 PM (3).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.17 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.46 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.46 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.47 PM (1).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.47 PM (2).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.47 PM (3).jpeg"
+                            alt="Memory" loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.47 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                    <div class="photo-frame"><img src="assets/WhatsApp Image 2026-02-14 at 5.13.48 PM.jpeg" alt="Memory"
+                            loading="lazy"></div>
+                </div>
+                <div class="gallery-text text-center highlight-box mt-2">
+                    <p>Every picture tells a story. Every story reminds me how lucky I am to have you. ✨</p>
+                </div>
+            </section>
+
+            <!-- 4.1. 3D Memory Carousel -->
+            <section id="carousel-section" class="section">
+                <h2 class="section-title shimmer-text">3D Memory Carousel</h2>
+                <div class="carousel-container">
+                    <div class="carousel-3d" id="carousel-3d">
+                        <!-- Carousel items will be generated by JS -->
+                    </div>
+                </div>
+                <div class="carousel-controls mt-2">
+                    <button id="carousel-prev" class="btn secondary-btn">⬅️ Prev</button>
+                    <button id="carousel-next" class="btn secondary-btn">Next ➡️</button>
+                </div>
+            </section>
+
+            <!-- 4.2. Polaroid Memory Wall -->
+            <section id="polaroid-wall" class="section">
+                <h2 class="section-title shimmer-text">Memory Draggable Wall</h2>
+                <p class="text-center">Drag our photos around! Click to see the back. 📌</p>
+                <div class="corkboard" id="corkboard">
+                    <!-- Draggable polaroids will be generated by JS -->
+                </div>
+            </section>
+
+            <!-- 4.5. Video Gallery -->
+            <section id="video-gallery" class="section">
+                <h2 class="section-title shimmer-text">Precious Moments in Motion</h2>
+                <div class="video-gallery-grid">
+                    <div class="video-frame">
+                        <video class="gallery-video" controls preload="metadata" loading="lazy">
+                            <source src="assets/WhatsApp Video 2026-02-14 at 5.13.04 PM.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <span class="play-icon">▶</span>
+                        </div>
+                    </div>
+                    <div class="video-frame">
+                        <video class="gallery-video" controls preload="metadata" loading="lazy">
+                            <source src="assets/WhatsApp Video 2026-02-14 at 5.13.08 PM.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <span class="play-icon">▶</span>
+                        </div>
+                    </div>
+                    <div class="video-frame">
+                        <video class="gallery-video" controls preload="metadata" loading="lazy">
+                            <source src="assets/WhatsApp Video 2026-02-14 at 5.13.16 PM.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <span class="play-icon">▶</span>
+                        </div>
+                    </div>
+                    <div class="video-frame">
+                        <video class="gallery-video" controls preload="metadata" loading="lazy">
+                            <source src="assets/WhatsApp Video 2026-02-14 at 5.13.46 PM.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <span class="play-icon">▶</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-text text-center highlight-box mt-2">
+                    <p>These videos capture the beautiful moments we've shared together. Each frame is a treasure. 💕
+                    </p>
+                </div>
+            </section>
+
+            <!-- 4.3. Virtual Scrapbook -->
+            <section id="scrapbook-section" class="section">
+                <h2 class="section-title shimmer-text">Our Virtual Scrapbook</h2>
+                <div class="book-container">
+                    <div class="book" id="scrapbook">
+                        <div class="page cover">
+                            <h3>Our Story</h3>
+                        </div>
+                        <div class="page">
+                            <img src="assets/WhatsApp Image 2026-02-14 at 5.13.09 PM (1).jpeg" alt="Page 1">
+                            <p>Everything started here...</p>
+                        </div>
+                        <div class="page">
+                            <img src="assets/WhatsApp Image 2026-02-14 at 5.13.10 PM (1).jpeg" alt="Page 2">
+                            <p>And it's only getting better.</p>
+                        </div>
+                        <div class="page back-cover">
+                            <h3>To Be Continued...</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-controls mt-2">
+                    <button id="book-prev" class="btn secondary-btn">Previous Page</button>
+                    <button id="book-next" class="btn secondary-btn">Next Page</button>
+                </div>
+            </section>
+
+            <!-- 4.4. Message in a Bottle -->
+            <section id="bottle-ocean" class="section text-center">
+                <h2 class="section-title shimmer-text">Washed Ashore</h2>
+                <div class="ocean">
+                    <div class="wave"></div>
+                    <div class="bottle-wrapper">
+                        <div class="bottle" id="bottle">🍾</div>
+                    </div>
+                </div>
+                <div id="bottle-message-modal" class="hidden">
+                    <div class="message-content glass-card">
+                        <span id="close-bottle">&times;</span>
+                        <p id="bottle-text"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Countdown Timer -->
+            <section id="countdown-section" class="section text-center">
+                <h2 id="countdown-title" class="section-title shimmer-text">Counting Every Second Until My Queen’s
+                    Birthday 👑</h2>
+                <div class="countdown-container glass-card">
+                    <div class="time-box"><span id="days">00</span><label>Days</label></div>
+                    <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
+                    <div class="time-box"><span id="minutes">00</span><label>Minutes</label></div>
+                    <div class="time-box"><span id="seconds">00</span><label>Seconds</label></div>
+                </div>
+            </section>
+
+            <!-- 6. Reasons Why I Love You -->
+            <section id="reasons" class="section text-center">
+                <h2 class="section-title shimmer-text">100 Reasons Why I Love You</h2>
+                <div class="reason-card" id="love-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h3>Secret Message ❤️</h3>
+                            <p>Click to Reveal</p>
+                        </div>
+                        <div class="card-back">
+                            <p id="reason-text">I love you because your smile melts my heart.</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="reason-btn" class="btn secondary-btn">👉 Get Another Reason</button>
+            </section>
+
+            <!-- 6.5. Promise Scratch Cards -->
+            <section id="scratch-cards" class="section text-center">
+                <h2 class="section-title shimmer-text">Your Digital Promises</h2>
+                <p>Scratch to reveal a special promise just for you! 🎫</p>
+                <div class="scratch-container" id="scratch-container">
+                    <!-- Scratch cards will be generated by JS -->
+                </div>
+            </section>
+
+            <!-- 6.6. Daily Love Fortune -->
+            <section id="fortune-section" class="section text-center">
+                <h2 class="section-title shimmer-text">Your Daily Love Fortune</h2>
+                <div class="crystal-ball-container">
+                    <div class="crystal-ball" id="crystal-ball">
+                        <span class="glow"></span>
+                        <div id="fortune-reveal" class="hidden"></div>
+                    </div>
+                </div>
+                <p class="mt-2">Click the crystal ball to see your fortune... 🔮</p>
+            </section>
+
+            <!-- 6.7. Heartbeat Central -->
+            <section id="heartbeat-section" class="section text-center">
+                <h2 class="section-title shimmer-text">Listen to My Heart</h2>
+                <div class="mega-heart-container">
+                    <div id="mega-heart" class="mega-heart">❤️</div>
+                </div>
+                <p id="heart-instruction">Hold down the heart to hear it beat... 💓</p>
+            </section>
+
+            <!-- 7. Birthday Wish -->
+            <section id="wish" class="section text-center">
+                <h1 class="birthday-text shimmer-text neon-pulse">🎂 Happy Birthday, <br>My Love Rakshna! 🎂</h1>
+                <div class="glass-card mt-2">
+                    <p>May your life be filled with success, happiness, health, and endless love.</p>
+                    <p>May all your dreams come true.</p>
+                    <p>And may I always be the one standing beside you, holding your hand. 💍</p>
+                </div>
+            </section>
+
+            <!-- 8. Final Surprise & Gift Box -->
+            <section id="final-surprise" class="section text-center">
+                <div id="stars-container"></div>
+
+                <div class="gift-box-wrapper mt-2">
+                    <div class="gift-box" id="gift-box">
+                        <div class="gift-lid"></div>
+                        <div class="gift-body"></div>
+                        <div class="gift-surprise">
+                            <h3>🎁 A Special Gift Just For You! 🎁</h3>
+                            <p>You have unlocked every single memory and promise today.</p>
+                        </div>
+                    </div>
+                    <p id="gift-instruction">Click the box to unwrap your surprise! ✨</p>
+                </div>
+
+                <div class="final-content mt-2">
+                    <p class="final-text">No matter where life takes us… No matter what challenges come…</p>
+                    <p class="final-text highlight">I will always choose you. Today. Tomorrow. Forever. ❤️</p>
+                    <button id="love-btn" class="btn primary-btn xl-btn">👉 I Love You Rakshna</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Struck Overlay (appears when countdown ends) -->
+        <div id="struck-overlay" class="struck-overlay hidden">
+            <div class="glass-card struck-content text-center">
+                <h2 class="shimmer-text">❤️ A Special Message ❤️</h2>
+                <p class="apology-text">"Sorry di Ammu ma, unaya na rmba hurt pannirupan and neraya hurt pannirupan,
+                    unnkoda neraya sanda poturupan ❤️"</p>
+                <div class="heart-pulse">💖</div>
+            </div>
+        </div>
+
+        <div class="glitch-flash"></div>
+
+        <!-- Crash/Warning Overlay -->
+        <div id="crash-overlay" class="crash-overlay hidden">
+            <div class="glitch-container">
+                <div class="glitch-text" data-text="CRITICAL SYSTEM FAILURE">CRITICAL SYSTEM FAILURE</div>
+                <div class="terminal-content">
+                    <p class="terminal-line">> Initializing emergency protocols...</p>
+                    <p class="terminal-line">> Memory overflow detected at 0xRAKSHNA_LOVE</p>
+                    <p class="terminal-line">> Core temperature rising...</p>
+                    <p class="terminal-line">> FATAL ERROR: Heart.exe stopped responding</p>
+                    <div class="warning-box">
+                        <span class="warning-icon">⚠️</span>
+                        <span class="warning-msg">SYSTEM OVERLOAD: TOO MUCH LOVE</span>
+                    </div>
+                    <p class="terminal-line">> Attempting system reboot in <span id="reboot-timer">5</span>s...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
