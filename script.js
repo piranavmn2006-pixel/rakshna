@@ -801,21 +801,24 @@ In your heart, I find my sweetest rest.
 Forever yours... ❤️`;
 
     let charIndex = 0;
+    let isTyping = false;
     function typePoem() {
-        if (charIndex < poem.length) {
-            handwrittenText.innerHTML += poem.charAt(charIndex) === '\n' ? '<br>' : poem.charAt(charIndex);
-            charIndex++;
-            setTimeout(typePoem, 50);
-        }
-    }
+        if (isTyping) return;
+        isTyping = true;
+        handwrittenText.innerHTML = '';
+        charIndex = 0;
 
-    const parchmentObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            typePoem();
-            parchmentObserver.disconnect();
-        }
-    }, { threshold: 0.5 });
-    if (document.getElementById('parchment')) parchmentObserver.observe(document.getElementById('parchment'));
+        const typeChar = () => {
+            if (charIndex < poem.length) {
+                handwrittenText.innerHTML += poem.charAt(charIndex) === '\n' ? '<br>' : poem.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeChar, 50);
+            } else {
+                isTyping = false;
+            }
+        };
+        typeChar();
+    }
 
     // 23. Message in a Bottle Logic
     const bottle = document.getElementById('bottle');
