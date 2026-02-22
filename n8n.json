@@ -1,0 +1,82 @@
+{
+    "name": "Birthday Surprise Notification 🎂",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "birthday-climax",
+                "options": {}
+            },
+            "id": "e2e8e2e8-e2e8-e2e8-e2e8-e2e8e2e8e2e8",
+            "name": "Website Signal 📡",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                400,
+                300
+            ],
+            "webhookId": "birthday-climax"
+        },
+        {
+            "parameters": {
+                "keepOnlySet": true,
+                "values": {
+                    "string": [
+                        {
+                            "name": "message",
+                            "value": "={{ $json.body.event === 'gift_opened' ? '🎁 RAKSHNA JUST OPENED THE GIFT! 🔥' : '❤️ RAKSHNA SAYS \"I LOVE YOU\"! ❤️' }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "f3f3f3f3-f3f3-f3f3-f3f3-f3f3f3f3f3f3",
+            "name": "Magic Message Formatter ✨",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 1,
+            "position": [
+                620,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "chatId": "8238812129",
+                "text": "={{ $json.message }}\n\nTime: {{ $now.toLocaleString() }}",
+                "additionalFields": {}
+            },
+            "id": "a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1",
+            "name": "Telegram Alert 📱",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1,
+            "position": [
+                840,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Website Signal 📡": {
+            "main": [
+                [
+                    {
+                        "node": "Magic Message Formatter ✨",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Magic Message Formatter ✨": {
+            "main": [
+                [
+                    {
+                        "node": "Telegram Alert 📱",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

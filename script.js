@@ -10,6 +10,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const scenePrev = document.getElementById('scene-prev');
     let currentSceneIndex = 0;
 
+    // --- N8N AUTOMATION LOGIC ---
+    // Automatically switch between Test and Production URLs
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const N8N_ENV = isLocal ? 'test' : 'prod';
+
+    const N8N_CONFIG = {
+        test: "https://n8n-yhly.onrender.com/webhook-test/birthday-climax",
+        prod: "https://n8n-yhly.onrender.com/webhook/birthday-climax"
+    };
+
+    const n8nWebhookURL = N8N_CONFIG[N8N_ENV];
+    console.log(`[n8n Debug] Webhook active: ${n8nWebhookURL} (${N8N_ENV} mode)`);
+
+    // Expose a global test function for you to use in the console
+    window.testN8N = () => triggerN8N('manual_test_from_console');
+
+    async function triggerN8N(event) {
+        console.log(`[n8n Debug] Attempting to trigger event: ${event}`);
+        if (!n8nWebhookURL) {
+            console.warn("[n8n Debug] Webhook URL is missing!");
+            return;
+        }
+
+        try {
+            const response = await fetch(n8nWebhookURL, {
+                method: 'POST',
+                mode: 'cors', // Explicitly enable CORS
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event: event,
+                    timestamp: new Date().toISOString()
+                })
+            });
+
+            if (response.ok) {
+                console.log(`[n8n Debug] Successfully triggered: ${event}`);
+            } else {
+                console.error(`[n8n Debug] Server responded with status: ${response.status}`);
+            }
+        } catch (err) {
+            console.error("[n8n Debug] Webhook failed. Check if n8n is running and listening:", err);
+        }
+    }
+
     function goToSection(index) {
         if (index < 0 || index >= sections.length) return;
 
@@ -339,44 +383,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Final Love Button & Confetti
     const loveBtn = document.getElementById('love-btn');
-    loveBtn.addEventListener('click', () => {
-        // Confetti explosion
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#ff4d6d', '#ff8fa3', '#7209b7']
-        });
+    if (loveBtn) {
+        loveBtn.addEventListener('click', () => {
+            // Trigger n8n
+            triggerN8N('i_love_you_clicked');
 
-        // Heart explosion (multiple smaller bursts)
-        const defaults = {
-            spread: 360,
-            ticks: 50,
-            gravity: 0,
-            decay: 0.94,
-            startVelocity: 30,
-            shapes: ['heart'],
-            colors: ['FFC0CB', 'FF69B4', 'FF1493', 'C71585']
-        };
+            // Confetti explosion
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ff8fa3', '#7209b7']
+            });
 
-        const heartShape = confetti.shapeFromPath({
-            path: 'M167 11c-75.1 0-136 60.9-136 136 0 92.6 156 211 156 211s156-118.4 156-211c0-75.1-60.9-136-136-136-31.5 0-60.5 10.7-83.6 28.9C102.5 21.7 73.5 11 42 11'
-        });
+            // Heart explosion (multiple smaller bursts)
+            const defaults = {
+                spread: 360,
+                ticks: 50,
+                gravity: 0,
+                decay: 0.94,
+                startVelocity: 30,
+                shapes: ['heart'],
+                colors: ['FFC0CB', 'FF69B4', 'FF1493', 'C71585']
+            };
 
-        confetti({
-            ...defaults,
-            particleCount: 40,
-            scalar: 2,
-            shapes: [heartShape]
-        });
+            const heartShape = confetti.shapeFromPath({
+                path: 'M167 11c-75.1 0-136 60.9-136 136 0 92.6 156 211 156 211s156-118.4 156-211c0-75.1-60.9-136-136-136-31.5 0-60.5 10.7-83.6 28.9C102.5 21.7 73.5 11 42 11'
+            });
 
-        confetti({
-            ...defaults,
-            particleCount: 20,
-            scalar: 3,
-            shapes: [heartShape]
+            confetti({
+                ...defaults,
+                particleCount: 40,
+                scalar: 2,
+                shapes: [heartShape]
+            });
+
+            confetti({
+                ...defaults,
+                particleCount: 20,
+                scalar: 3,
+                shapes: [heartShape]
+            });
         });
-    });
+    }
 
     // 15. 3D Memory Carousel Logic
     const carousel3d = document.getElementById('carousel-3d');
@@ -568,6 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
             giftBox.classList.add('open');
             giftInstruction.innerText = "Yay! Happy Birthday!!! ❤️";
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            triggerN8N('gift_opened');
         });
     }
 
