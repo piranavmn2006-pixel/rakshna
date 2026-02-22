@@ -678,8 +678,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         starCanvas.addEventListener('click', (e) => {
             const rect = starCanvas.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
+            const mouseX = (e.clientX - rect.left) * (starCanvas.width / rect.width);
+            const mouseY = (e.clientY - rect.top) * (starCanvas.height / rect.height);
 
             const nextStar = heartPoints[connectedCount];
             if (nextStar) {

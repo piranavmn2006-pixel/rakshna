@@ -2195,3 +2195,23 @@ h3 {
 .page.cover { background: var(--primary); color: #fff; align-items: center; justify-content: center; z-index: 5; }
 .page.back-cover { background: var(--primary-dark); color: #fff; align-items: center; justify-content: center; }
 
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .navbar { padding: 0.8rem 1rem; }
+    .nav-links { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .nav-links a { font-size: 0.8rem; padding: 0.4rem 0.6rem; }
+    .glass-card { padding: 1.5rem; width: 95%; }
+    .section-title { font-size: 2rem !important; }
+    .crystal-ball { width: 150px; height: 150px; }
+    .mega-heart { font-size: 5rem; }
+    .book { width: 250px; height: 350px; }
+    .page { padding: 10px; }
+    .page img { height: 180px; }
+    .constellation-canvas-wrapper { width: 100%; max-width: 350px; }
+    #constellation-canvas { width: 100% !important; height: auto !important; }
+    .map-container { height: 300px; }
+    .timeline-card { padding: 1rem; }
+    .photo-frame { padding: 5px; }
+}
+
