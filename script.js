@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = !isPlaying;
     });
 
-    // 5. Countdown Timer Logic (1 minute from page load for final review)
-    const countdownDate = new Date().getTime() + (60 * 1000);
+    // 5. Countdown Timer Logic (Target: Feb 23, 2026, 1 PM)
+    const countdownDate = new Date("Feb 23, 2026 13:00:00").getTime();
     const countdownTitle = document.getElementById('countdown-title');
 
     const updateCountdown = () => {
