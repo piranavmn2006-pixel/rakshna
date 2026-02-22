@@ -58,7 +58,8 @@ body {
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     color: var(--text-main);
-    overflow-x: hidden;
+    overflow: hidden;
+    /* Disable scrolling for Story Mode */
     min-height: 100vh;
     scroll-behavior: smooth;
     position: relative;
@@ -2532,3 +2533,9 @@ h3 {
         padding: 5px;
     }
 }
+/* Story Mode Navigation */
+.story-nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 2rem; z-index: 2000; }
+.story-nav .btn { padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: bold; background: var(--glass-strong); color: var(--text-main); border: 2px solid var(--accent-gold); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.story-nav .btn:hover { background: var(--accent-gold); color: #fff; transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+.story-nav .btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+

@@ -3,17 +3,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const surpriseContent = document.getElementById('surprise-content');
     const mainNav = document.getElementById('main-nav');
 
+    // --- STORY MODE LOGIC ---
+    const sections = Array.from(document.querySelectorAll('.section'));
+    const storyNav = document.getElementById('story-nav');
+    const sceneNext = document.getElementById('scene-next');
+    const scenePrev = document.getElementById('scene-prev');
+    let currentSceneIndex = 0;
+
+    function goToSection(index) {
+        if (index < 0 || index >= sections.length) return;
+
+        // Hide current
+        sections[currentSceneIndex].classList.remove('active-scene');
+
+        // Show new
+        currentSceneIndex = index;
+        sections[currentSceneIndex].classList.add('active-scene');
+
+        // Update Nav visibility
+        if (currentSceneIndex > 0) {
+            storyNav.classList.remove('hidden');
+            mainNav.classList.remove('hidden');
+        } else {
+            storyNav.classList.add('hidden');
+            mainNav.classList.add('hidden');
+        }
+
+        // Update Prev Button
+        scenePrev.disabled = currentSceneIndex <= 1;
+
+        // Update Next Button label for final section
+        if (currentSceneIndex === sections.length - 1) {
+            sceneNext.innerText = "Gift for You 🎁";
+        } else {
+            sceneNext.innerText = "Next ❤️";
+        }
+
+        // Scroll to top of section (legacy safety)
+        window.scrollTo(0, 0);
+
+        // Trigger specific animations
+        if (sections[currentSceneIndex].id === 'parchment-section') {
+            typePoem();
+        }
+    }
+
     enterBtn.addEventListener('click', () => {
         surpriseContent.classList.remove('hidden');
-        mainNav.classList.remove('hidden');
-        document.getElementById('letter').scrollIntoView({ behavior: 'smooth' });
+        goToSection(1); // Go to Letter
     });
 
-    // Navigation Links Smooth Scroll
+    sceneNext.addEventListener('click', () => {
+        if (currentSceneIndex < sections.length - 1) {
+            goToSection(currentSceneIndex + 1);
+        }
+    });
+
+    scenePrev.addEventListener('click', () => {
+        if (currentSceneIndex > 1) {
+            goToSection(currentSceneIndex - 1);
+        }
+    });
+
+    // Navigation Links (Story Mode version)
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             const targetId = link.getAttribute('data-target');
-            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            const targetIndex = sections.findIndex(s => s.id === targetId);
+            if (targetIndex !== -1) goToSection(targetIndex);
         });
     });
 

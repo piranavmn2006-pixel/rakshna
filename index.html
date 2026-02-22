@@ -49,7 +49,7 @@
 
     <main>
         <!-- 1. Welcome Landing Page -->
-        <section id="welcome" class="hero section">
+        <section id="welcome" class="hero section active-scene">
             <!-- Background Video -->
             <div class="video-bg">
                 <video autoplay muted loop playsinline id="bg-video">
@@ -511,6 +511,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
+    <div class="story-nav hidden" id="story-nav">
+        <button id="scene-prev" class="btn">⬅️ Back</button>
+        <button id="scene-next" class="btn">Next ❤️</button>
+    </div>
 </body>
 
 </html>
