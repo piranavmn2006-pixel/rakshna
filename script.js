@@ -536,11 +536,17 @@ document.addEventListener('DOMContentLoaded', () => {
             function scratch(e) {
                 if (!isDown) return;
                 const rect = canvas.getBoundingClientRect();
-                const x = (e.clientX || e.touches[0].clientX) - rect.left;
-                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                const clientX = e.clientX || (e.touches ? e.touches[0].clientX : null);
+                const clientY = e.clientY || (e.touches ? e.touches[0].clientY : null);
+                if (clientX === null) return;
+
+                // Scale coordinates to internal canvas resolution
+                const x = (clientX - rect.left) * (canvas.width / rect.width);
+                const y = (clientY - rect.top) * (canvas.height / rect.height);
+
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath();
-                ctx.arc(x, y, 20, 0, Math.PI * 2);
+                ctx.arc(x, y, 25, 0, Math.PI * 2);
                 ctx.fill();
             }
 
