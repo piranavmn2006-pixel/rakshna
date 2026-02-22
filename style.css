@@ -2150,68 +2150,385 @@ h3 {
 .gift-box.open .gift-body {
     filter: brightness(0.8);
 }
+
 /* Love Map */
-.map-container { height: 400px; position: relative; background: #e0f2f1; overflow: hidden; }
-.map-frame { width: 100%; height: 100%; background: url('https://img.freepik.com/free-vector/hand-drawn-vintage-map-background_23-2148821424.jpg') center/cover; position: relative; }
-.map-pin { position: absolute; font-size: 2rem; cursor: pointer; transition: transform 0.3s ease; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.map-pin:hover { transform: scale(1.5) translateY(-5px); }
-#map-info { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; min-width: 200px; text-align: center; }
+.map-container {
+    height: 400px;
+    position: relative;
+    background: #e0f2f1;
+    overflow: hidden;
+}
+
+.map-frame {
+    width: 100%;
+    height: 100%;
+    background: url('https://img.freepik.com/free-vector/hand-drawn-vintage-map-background_23-2148821424.jpg') center/cover;
+    position: relative;
+}
+
+.map-pin {
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.map-pin:hover {
+    transform: scale(1.5) translateY(-5px);
+}
+
+#map-info {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    min-width: 200px;
+    text-align: center;
+}
+
 /* Constellation */
-.constellation-canvas-wrapper { background: #000; border-radius: 20px; box-shadow: 0 0 30px rgba(187, 134, 252, 0.3); overflow: hidden; margin: 20px auto; width: fit-content; }
-#constellation-canvas { cursor: crosshair; }
+.constellation-canvas-wrapper {
+    background: #000;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(187, 134, 252, 0.3);
+    overflow: hidden;
+    margin: 20px auto;
+    width: fit-content;
+}
+
+#constellation-canvas {
+    cursor: crosshair;
+}
+
 /* Parchment */
-.parchment-container { perspective: 1000px; display: flex; justify-content: center; padding: 2rem; }
-.parchment { width: 90%; max-width: 600px; min-height: 400px; background: #fdf5e6; background-image: url('https://www.transparenttextures.com/patterns/old-map.png'); padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 50px rgba(139, 69, 19, 0.2); border-radius: 5px; position: relative; font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #5d4037; line-height: 1.8; }
-.parchment::before, .parchment::after { content: ''; position: absolute; width: 100%; height: 20px; background: #e6ccb2; left: 0; }
-.parchment::before { top: -10px; border-radius: 50% / 10px; }
-.parchment::after { bottom: -10px; border-radius: 50% / 10px; }
+.parchment-container {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.parchment {
+    width: 90%;
+    max-width: 600px;
+    min-height: 400px;
+    background: #fdf5e6;
+    background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(139, 69, 19, 0.2);
+    border-radius: 5px;
+    position: relative;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #5d4037;
+    line-height: 1.8;
+}
+
+.parchment::before,
+.parchment::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background: #e6ccb2;
+    left: 0;
+}
+
+.parchment::before {
+    top: -10px;
+    border-radius: 50% / 10px;
+}
+
+.parchment::after {
+    bottom: -10px;
+    border-radius: 50% / 10px;
+}
+
 /* Message in a Bottle */
-.ocean { height: 300px; background: linear-gradient(to bottom, #4fc3f7, #0288d1); position: relative; overflow: hidden; border-radius: 20px; }
-.wave { position: absolute; width: 200%; height: 100%; background: rgba(255,255,255,0.2); top: 50%; left: -50%; border-radius: 40%; animation: wave-float 10s infinite linear; }
-@keyframes wave-float { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.bottle-wrapper { position: absolute; top: 60%; left: 45%; animation: bob 3s infinite ease-in-out; }
-.bottle { font-size: 4rem; cursor: pointer; transition: transform 0.3s; }
-.bottle:hover { transform: scale(1.1) rotate(15deg); }
-@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-#bottle-message-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; }
-.message-content { max-width: 500px; padding: 3rem; position: relative; background: #fff; color: #333; }
-#close-bottle { position: absolute; top: 10px; right: 20px; font-size: 2rem; cursor: pointer; }
+.ocean {
+    height: 300px;
+    background: linear-gradient(to bottom, #4fc3f7, #0288d1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    top: 50%;
+    left: -50%;
+    border-radius: 40%;
+    animation: wave-float 10s infinite linear;
+}
+
+@keyframes wave-float {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.bottle-wrapper {
+    position: absolute;
+    top: 60%;
+    left: 45%;
+    animation: bob 3s infinite ease-in-out;
+}
+
+.bottle {
+    font-size: 4rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.bottle:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+
+@keyframes bob {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+#bottle-message-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-content {
+    max-width: 500px;
+    padding: 3rem;
+    position: relative;
+    background: #fff;
+    color: #333;
+}
+
+#close-bottle {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
 /* Crystal Ball */
-.crystal-ball-container { display: flex; justify-content: center; padding: 2rem; }
-.crystal-ball { width: 200px; height: 200px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; position: relative; backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.3); cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 50px rgba(187, 134, 252, 0.4), inset 0 0 30px rgba(255, 255, 255, 0.2); overflow: hidden; }
-.crystal-ball .glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent); pointer-events: none; }
-#fortune-reveal { color: #fff; font-weight: bold; text-align: center; padding: 20px; animation: fadeIn 1s; }
+.crystal-ball-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.crystal-ball {
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 50px rgba(187, 134, 252, 0.4), inset 0 0 30px rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.crystal-ball .glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent);
+    pointer-events: none;
+}
+
+#fortune-reveal {
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 1s;
+}
+
 /* Heartbeat */
-.mega-heart-container { padding: 3rem; display: flex; justify-content: center; }
-.mega-heart { font-size: 8rem; cursor: pointer; user-select: none; transition: transform 0.1s; }
-.heart-beating { animation: heart-pulse-active var(--beat-speed, 0.8s) infinite; }
-@keyframes heart-pulse-active { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+.mega-heart-container {
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.mega-heart {
+    font-size: 8rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s;
+}
+
+.heart-beating {
+    animation: heart-pulse-active var(--beat-speed, 0.8s) infinite;
+}
+
+@keyframes heart-pulse-active {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 /* Virtual Scrapbook */
-.book-container { perspective: 1500px; display: flex; justify-content: center; padding: 2rem; }
-.book { width: 300px; height: 400px; position: relative; transform-style: preserve-3d; transition: transform 0.5s; }
-.page { position: absolute; width: 100%; height: 100%; background: #fff; border: 1px solid #ddd; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; backface-visibility: hidden; transform-origin: left; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1); }
-.page img { width: 100%; height: 250px; object-fit: cover; margin-bottom: 15px; }
-.page.turned { transform: rotateY(-180deg); }
-.page.cover { background: var(--primary); color: #fff; align-items: center; justify-content: center; z-index: 5; }
-.page.back-cover { background: var(--primary-dark); color: #fff; align-items: center; justify-content: center; }
+.book-container {
+    perspective: 1500px;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.book {
+    width: 300px;
+    height: 400px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    backface-visibility: hidden;
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.page img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.page.turned {
+    transform: rotateY(-180deg);
+}
+
+.page.cover {
+    background: var(--primary);
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+}
+
+.page.back-cover {
+    background: var(--primary-dark);
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+}
 
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .navbar { padding: 0.8rem 1rem; }
-    .nav-links { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
-    .nav-links a { font-size: 0.8rem; padding: 0.4rem 0.6rem; }
-    .glass-card { padding: 1.5rem; width: 95%; }
-    .section-title { font-size: 2rem !important; }
-    .crystal-ball { width: 150px; height: 150px; }
-    .mega-heart { font-size: 5rem; }
-    .book { width: 250px; height: 350px; }
-    .page { padding: 10px; }
-    .page img { height: 180px; }
-    .constellation-canvas-wrapper { width: 100%; max-width: 350px; }
-    #constellation-canvas { width: 100% !important; height: auto !important; }
-    .map-container { height: 300px; }
-    .timeline-card { padding: 1rem; }
-    .photo-frame { padding: 5px; }
-}
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
 
+    .nav-links {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .section-title {
+        font-size: 2rem !important;
+    }
+
+    .crystal-ball {
+        width: 150px;
+        height: 150px;
+    }
+
+    .mega-heart {
+        font-size: 5rem;
+    }
+
+    .book {
+        width: 250px;
+        height: 350px;
+    }
+
+    .page {
+        padding: 10px;
+    }
+
+    .page img {
+        height: 180px;
+    }
+
+    .constellation-canvas-wrapper {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    #constellation-canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+
+    .timeline-card {
+        padding: 1rem;
+    }
+
+    .photo-frame {
+        padding: 5px;
+    }
+}

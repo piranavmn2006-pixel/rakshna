@@ -876,6 +876,11 @@ Forever yours... ❤️`;
     const pages = document.querySelectorAll('.page');
     let currentPage = 0;
 
+    // Set initial stacking order
+    pages.forEach((page, index) => {
+        page.style.zIndex = pages.length - index;
+    });
+
     if (bookNext) {
         bookNext.addEventListener('click', () => {
             if (currentPage < pages.length - 1) {
