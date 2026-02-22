@@ -414,30 +414,44 @@ document.addEventListener('DOMContentLoaded', () => {
             let isDragging = false;
             let startX, startY;
 
-            polaroid.addEventListener('mousedown', (e) => {
+            polaroid.addEventListener('mousedown', startDrag);
+            polaroid.addEventListener('touchstart', (e) => startDrag(e.touches[0]), { passive: false });
+
+            function startDrag(e) {
                 isDragging = true;
                 polaroid.dataset.dragging = "";
                 startX = e.clientX - polaroid.offsetLeft;
                 startY = e.clientY - polaroid.offsetTop;
                 polaroid.style.transition = 'none';
-            });
+                polaroid.style.zIndex = "100";
+            }
 
-            window.addEventListener('mousemove', (e) => {
+            const moveDrag = (e) => {
                 if (!isDragging) return;
+                const clientX = e.clientX || (e.touches ? e.touches[0].clientX : null);
+                const clientY = e.clientY || (e.touches ? e.touches[0].clientY : null);
+                if (clientX === null) return;
+
                 polaroid.dataset.dragging = "true";
-                const newX = e.clientX - startX;
-                const newY = e.clientY - startY;
+                const newX = clientX - startX;
+                const newY = clientY - startY;
                 polaroid.style.left = `${newX}px`;
                 polaroid.style.top = `${newY}px`;
-            });
+            };
 
-            window.addEventListener('mouseup', () => {
+            const endDrag = () => {
                 if (isDragging) {
                     isDragging = false;
                     setTimeout(() => delete polaroid.dataset.dragging, 100);
                     polaroid.style.transition = 'transform 0.3s ease';
+                    polaroid.style.zIndex = "1";
                 }
-            });
+            };
+
+            window.addEventListener('mousemove', moveDrag);
+            window.addEventListener('touchmove', (e) => moveDrag(e), { passive: false });
+            window.addEventListener('mouseup', endDrag);
+            window.addEventListener('touchend', endDrag);
 
             corkboard.appendChild(polaroid);
         });
@@ -655,12 +669,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Draw clickable destiny stars
             heartPoints.forEach((p, i) => {
                 sCtx.beginPath();
-                sCtx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-                sCtx.fillStyle = i < connectedCount ? '#bb86fc' : '#444';
-                sCtx.shadowBlur = i < connectedCount ? 15 : 0;
+                sCtx.arc(p.x, p.y, 8, 0, Math.PI * 2); // Bigger stars
+                sCtx.fillStyle = i < connectedCount ? '#bb86fc' : 'rgba(255, 255, 255, 0.3)';
+                sCtx.shadowBlur = i < connectedCount ? 20 : 0;
                 sCtx.shadowColor = '#bb86fc';
                 sCtx.fill();
                 sCtx.shadowBlur = 0;
+
+                // Add a faint pulse to the next star
+                if (i === connectedCount) {
+                    sCtx.beginPath();
+                    sCtx.arc(p.x, p.y, 12 + Math.sin(Date.now() / 200) * 5, 0, Math.PI * 2);
+                    sCtx.strokeStyle = 'rgba(187, 134, 252, 0.5)';
+                    sCtx.stroke();
+                }
             });
 
             // Draw lines
@@ -670,29 +692,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let i = 1; i < connectedCount; i++) {
                     sCtx.lineTo(heartPoints[i].x, heartPoints[i].y);
                 }
-                sCtx.strokeStyle = 'rgba(187, 134, 252, 0.5)';
-                sCtx.lineWidth = 2;
+                sCtx.strokeStyle = 'rgba(187, 134, 252, 0.8)';
+                sCtx.lineWidth = 4; // Thicker lines
                 sCtx.stroke();
+            }
+
+            if (connectedCount < heartPoints.length) {
+                requestAnimationFrame(drawConstellation);
             }
         }
 
-        starCanvas.addEventListener('click', (e) => {
+        const handleCanvasClick = (e) => {
             const rect = starCanvas.getBoundingClientRect();
-            const mouseX = (e.clientX - rect.left) * (starCanvas.width / rect.width);
-            const mouseY = (e.clientY - rect.top) * (starCanvas.height / rect.height);
+            const clientX = e.clientX || (e.touches ? e.touches[0].clientX : null);
+            const clientY = e.clientY || (e.touches ? e.touches[0].clientY : null);
+            if (clientX === null) return;
+
+            const mouseX = (clientX - rect.left) * (starCanvas.width / rect.width);
+            const mouseY = (clientY - rect.top) * (starCanvas.height / rect.height);
 
             const nextStar = heartPoints[connectedCount];
             if (nextStar) {
                 const dist = Math.sqrt((mouseX - nextStar.x) ** 2 + (mouseY - nextStar.y) ** 2);
-                if (dist < 20) {
+                if (dist < 40) { // More forgiving radius
                     connectedCount++;
-                    drawConstellation();
                     if (connectedCount === heartPoints.length) {
                         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
                     }
                 }
             }
-        });
+        };
+
+        starCanvas.addEventListener('click', handleCanvasClick);
+        starCanvas.addEventListener('touchstart', (e) => {
+            handleCanvasClick(e);
+            e.preventDefault();
+        }, { passive: false });
 
         drawConstellation();
     }
@@ -781,7 +816,8 @@ Forever yours... ❤️`;
     let speed = 800;
 
     if (megaHeart) {
-        megaHeart.addEventListener('mousedown', () => {
+        const startHeartbeat = (e) => {
+            if (e.type === 'touchstart') e.preventDefault();
             megaHeart.classList.add('heart-beating');
             if (heartbeatAudio) {
                 heartbeatAudio.currentTime = 0;
@@ -793,7 +829,6 @@ Forever yours... ❤️`;
                 speed = Math.max(100, speed - 50);
                 megaHeart.style.setProperty('--beat-speed', `${speed}ms`);
 
-                // Speed up audio as well
                 if (heartbeatAudio) {
                     heartbeatAudio.playbackRate = Math.min(4, 800 / speed);
                 }
@@ -814,7 +849,10 @@ Forever yours... ❤️`;
                     }, 2000);
                 }
             }, 300);
-        });
+        };
+
+        megaHeart.addEventListener('mousedown', startHeartbeat);
+        megaHeart.addEventListener('touchstart', startHeartbeat, { passive: false });
 
         const stopHeartbeat = () => {
             clearInterval(beatInterval);
@@ -827,6 +865,7 @@ Forever yours... ❤️`;
         };
 
         window.addEventListener('mouseup', stopHeartbeat);
+        window.addEventListener('touchend', stopHeartbeat);
         window.addEventListener('mouseleave', stopHeartbeat);
     }
 
