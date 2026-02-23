@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(createPetal, 1000);
 
 
-    // 5. Countdown Timer Logic (Target: Feb 23, 2026, 1:15 PM)
+    // 5. Countdown Timer Logic (Target: Feb 23, 2026 13:15)
     const countdownDate = new Date("Feb 23, 2026 13:15:00").getTime();
     const countdownTitle = document.getElementById('countdown-title');
     let countdownInterval; // store reference so we can clear it when done
@@ -175,11 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // stop future ticks
             if (countdownInterval) clearInterval(countdownInterval);
 
-            // Trigger Crash Sequence (only once)
-            if (!document.body.classList.contains('crashed')) {
+            // only trigger crash if user has actually entered the surprise
+            if (!document.body.classList.contains('crashed') && !surpriseContent.classList.contains('hidden')) {
                 triggerCrashSequence();
-            } else {
-                // if we've already run crash sequence, make sure page is usable
+            } else if (document.body.classList.contains('crashed')) {
                 completeReboot();
             }
             return;
@@ -1007,8 +1006,8 @@ Forever yours... ❤️`;
         });
     }
 
-    // 12. Crash Sequence Logic (moved to global for access)
-    window.triggerCrashSequence = () => {
+    // Crash sequence logic (used by countdown)
+    function triggerCrashSequence() {
         document.body.classList.add('crashed');
         document.body.classList.add('screen-jitter');
         setTimeout(() => alert("⚠️ SYSTEM STABILITY COMPROMISED!"), 300);
@@ -1031,7 +1030,9 @@ Forever yours... ❤️`;
                 }
             }, 1000);
         }, 3000);
-    };
+    }
+    // expose for console testing
+    window.triggerCrashSequence = triggerCrashSequence;
 
     function completeReboot() {
         const crashOverlay = document.getElementById('crash-overlay');
