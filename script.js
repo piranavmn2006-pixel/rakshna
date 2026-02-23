@@ -157,15 +157,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Countdown Timer Logic (Target: Feb 23, 2026, 1:15 PM)
     const countdownDate = new Date("Feb 23, 2026 13:15:00").getTime();
     const countdownTitle = document.getElementById('countdown-title');
+    let countdownInterval; // store reference so we can clear it when done
 
     const updateCountdown = () => {
         const now = new Date().getTime();
         const distance = countdownDate - now;
 
         if (distance < 0) {
-            // Trigger Crash Sequence
+            // stop future ticks
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            // Trigger Crash Sequence (only once)
             if (!document.body.classList.contains('crashed')) {
                 triggerCrashSequence();
+            } else {
+                // if we've already run crash sequence, make sure page is usable
+                completeReboot();
             }
             return;
         }
@@ -181,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
     };
 
-    setInterval(updateCountdown, 1000);
+    countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
 
     // 6. Reveal Animations on Scroll
@@ -532,6 +539,21 @@ document.addEventListener('DOMContentLoaded', () => {
             window.addEventListener('touchend', endDrag);
 
             corkboard.appendChild(polaroid);
+        });
+    }
+
+
+    // allow user to dismiss the struck overlay after reboot
+    const struckOverlay = document.getElementById('struck-overlay');
+    if (struckOverlay) {
+        struckOverlay.addEventListener('click', () => {
+            struckOverlay.classList.add('hidden');
+        });
+        // also close with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !struckOverlay.classList.contains('hidden')) {
+                struckOverlay.classList.add('hidden');
+            }
         });
     }
 
@@ -988,7 +1010,11 @@ Forever yours... ❤️`;
             document.getElementById('countdown-title').innerHTML = '🎉 It’s Your Day, Rakshna!!! 🎉';
             document.querySelector('.countdown-container').classList.add('hidden');
             const struckOverlay = document.getElementById('struck-overlay');
-            if (struckOverlay) struckOverlay.classList.remove('hidden');
+            if (struckOverlay) {
+                struckOverlay.classList.remove('hidden');
+            }
+            // remove crash indicators so user can continue interacting
+            document.body.classList.remove('crashed', 'freeze-scroll');
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         }, 1000);
     }
