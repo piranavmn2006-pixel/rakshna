@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Global error / promise rejection logging helps catch runtime issues
+    window.addEventListener('error', e => {
+        console.error('Global error caught:', e.error || e.message, e);
+    });
+    window.addEventListener('unhandledrejection', e => {
+        console.error('Unhandled promise rejection:', e.reason);
+    });
+
     const enterBtn = document.getElementById('enter-btn');
     const surpriseContent = document.getElementById('surprise-content');
     const mainNav = document.getElementById('main-nav');
@@ -557,6 +565,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // diagnostics helper
+    function logFeatureDiagnoses() {
+        try {
+            const bed = document.getElementById('flower-bed');
+            console.log('diagnose: flower-bed children=', bed ? bed.children.length : 'missing');
+            console.log('diagnose: constellation canvas exists=', !!document.getElementById('constellation-canvas'));
+            console.log('diagnose: scratch cards container=', !!document.getElementById('scratch-container'));
+        } catch (e) {
+            console.error('diagnosis failed', e);
+        }
+    }
+
+    // initial diagnostics after DOM load
+    logFeatureDiagnoses();
+
     // 17. Scratch Cards Logic
     const scratchContainer = document.getElementById('scratch-container');
     const promises = [
@@ -647,21 +670,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 14. Interactive Flower Garden
-    const flowerBed = document.getElementById('flower-bed');
-    const flowerMsg = document.getElementById('flower-message');
-    const flowerEmojis = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '🏵️', '🌻'];
-    const flowerQuotes = [
-        "You are the most beautiful flower in my life. ❤️",
-        "Every day with you is like a spring day. 🍃",
-        "Your smile is brighter than any sunflower. 🌻",
-        "Like a rose, you are elegant and precious. 🌹",
-        "Thank you for blooming in my heart. 🌸",
-        "You make the world more colorful. 🌺",
-        "My love for you grows every single day. 🌷",
-        "You are my favorite bloom! 🌼"
-    ];
+    function initFlowerGarden() {
+        const flowerBed = document.getElementById('flower-bed');
+        const flowerMsg = document.getElementById('flower-message');
+        const flowerEmojis = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '🏵️', '🌻'];
+        const flowerQuotes = [
+            "You are the most beautiful flower in my life. ❤️",
+            "Every day with you is like a spring day. 🍃",
+            "Your smile is brighter than any sunflower. 🌻",
+            "Like a rose, you are elegant and precious. 🌹",
+            "Thank you for blooming in my heart. 🌸",
+            "You make the world more colorful. 🌺",
+            "My love for you grows every single day. 🌷",
+            "You are my favorite bloom! 🌼"
+        ];
 
-    if (flowerBed) {
+        if (!flowerBed) return;
+        flowerBed.innerHTML = ''; // reset if reinitializing
         flowerEmojis.forEach((emoji, index) => {
             const flower = document.createElement('div');
             flower.className = 'flower';
@@ -683,6 +708,9 @@ document.addEventListener('DOMContentLoaded', () => {
             flowerBed.appendChild(flower);
         });
     }
+
+    // call on load
+    initFlowerGarden();
 
     // 20. Love Map Logic
     const mapPins = document.querySelectorAll('.map-pin');
@@ -707,8 +735,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 21. Interactive Constellation Logic
-    const starCanvas = document.getElementById('constellation-canvas');
-    if (starCanvas) {
+    function initConstellation() {
+        const starCanvas = document.getElementById('constellation-canvas');
+        if (!starCanvas) return;
         const sCtx = starCanvas.getContext('2d');
         const starPoints = [];
         const heartPoints = [
@@ -804,6 +833,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         drawConstellation();
     }
+
+    // initial call
+    initConstellation();
 
     // 22. Ink & Parchment Logic
     const handwrittenText = document.getElementById('handwritten-text');
@@ -1015,6 +1047,10 @@ Forever yours... ❤️`;
             }
             // remove crash indicators so user can continue interacting
             document.body.classList.remove('crashed', 'freeze-scroll');
+            // reinitialize features in case something failed earlier
+            initFlowerGarden();
+            initConstellation();
+            logFeatureDiagnoses();
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         }, 1000);
     }
