@@ -154,8 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(createPetal, 1000);
 
 
-    // 5. Countdown Timer Logic (Target: Feb 23, 2026, 1 PM)
-    const countdownDate = new Date("Feb 23, 2026 13:00:00").getTime();
+    // 5. Countdown Timer Logic (Target: Feb 23, 2026, 1:15 PM)
+    const countdownDate = new Date("Feb 23, 2026 13:15:00").getTime();
     const countdownTitle = document.getElementById('countdown-title');
 
     const updateCountdown = () => {
